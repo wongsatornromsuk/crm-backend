@@ -26,7 +26,7 @@ This project simulates a basic **CRM (Customer Relationship Management)** backen
 It focuses on:
 - Clean backend architecture
 - RESTful API design
-- Authentication and authorization
+- Authentication
 - Database modeling
 - Cloud deployment with Docker
 
@@ -56,16 +56,85 @@ It focuses on:
 
 ## ✨ Features
 
-- Authentication and authorization using JWT
-- Role-based access control (Admin / User)
-- Customer management (CRUD)
-- Product management (CRUD)
-- Order management with business logic
-- Pagination and filtering support
+- Authentication using JWT
+- Lead, Account (Customer) and Opportunity management with business logic
 - RESTful API design
 - Centralized error handling
 - Health check endpoint for monitoring
 
+---
+
+## 🔄 Business Flow (CRM Process)
+
+The CRM system workflow starts with **Lead management**, representing potential customers who have shown interest in the company’s products.
+
+---
+
+### 1. Lead Creation
+A **Lead** represents a person who is interested in the company’s products.
+
+- A new Lead can be created by providing key information such as:
+  - First Name
+  - Last Name
+  - Mobile Number
+  - Email Address
+- After saving, the system automatically:
+  - Stores the Lead record
+  - Sets the Lead **stage** to **New**
+
+---
+
+### 2. Lead Qualification
+When the sales team contacts the Lead and confirms genuine interest, there are two possible paths:
+
+#### Option 1: Convert Lead to Account (Prospect)
+If the sales team is ready to present the product immediately:
+- The Lead can be **converted into an Account**
+- The system automatically:
+  - Creates an **Account**
+  - Sets the Account **type** to **Prospect**
+
+#### Option 2: Update Lead Stage to Qualified
+If the sales team is **not ready** to convert the Lead yet:
+- The Lead stage can be updated to **Qualified**
+- The Lead can be converted to an Account later when appropriate
+
+---
+
+### 3. Opportunity Creation
+From the **Account detail page**, the sales team can create one or more **Opportunities**.
+
+- An Account may have **zero or multiple Opportunities**
+- Each Opportunity includes:
+  - **Name**: the product or service the customer is interested in
+  - **Amount**: the estimated value of the deal
+
+---
+
+### 4. Opportunity Progression
+As the sales process continues:
+
+- When a proposal has been presented to the customer:
+  - The Opportunity stage is updated to **Proposal**
+
+---
+
+### 5. Deal Closure
+The final step is closing the Opportunity. There are two possible outcomes:
+
+- **Close Won** — the customer agrees to purchase
+- **Close Lost** — the customer decides not to proceed
+
+#### Account Type Update Logic
+- If **at least one Opportunity** for an Account is closed as **Close Won**:
+  - The system automatically updates the Account **type** to **Customer**
+  - This indicates that a successful sale has been completed
+- Until a deal is won, the Account remains a **Prospect**
+
+> **Note:**  
+> If a price negotiation occurs and a discount is applied to close the deal as **Close Won**,  
+> the Opportunity **amount must be updated** to reflect the actual final sale price.
+    
 ---
 
 ## 🗂 Project Structure
