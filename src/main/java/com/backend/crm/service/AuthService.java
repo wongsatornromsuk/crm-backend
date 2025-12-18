@@ -40,6 +40,7 @@ public class AuthService {
         }
 
         user.setCount(user.getCount()+1);
+        userRepository.save(user);
         
         String token = jwtService.generateToken(user.getUsername());
 
