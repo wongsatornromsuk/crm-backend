@@ -39,6 +39,8 @@ public class AuthService {
             throw new AppException(ErrorCode.INVALID_REQUEST, "Invalid username or password");
         }
 
+        user.setCount(user.getCount()+1);
+        
         String token = jwtService.generateToken(user.getUsername());
 
         return LoginResponse.builder()
