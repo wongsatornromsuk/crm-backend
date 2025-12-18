@@ -26,6 +26,8 @@ public class AppUser {
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
+    private Integer count;
+
     @Column(nullable = false)
     private boolean enabled;
 
